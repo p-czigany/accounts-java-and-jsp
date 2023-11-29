@@ -1,0 +1,29 @@
+{
+	"tableName":"xjfw.core.databasecontent",
+	"columns":[
+		{"name":"id","JavaClassName":"java.lang.Integer"},
+		{"name":"key","JavaClassName":"java.lang.String"},
+		{"name":"value","JavaClassName":"java.lang.String"},
+		{"name":"deleted","JavaClassName":"java.lang.Boolean"}
+	],
+	"rows": [
+		{
+		  "id": 1,
+		  "key": "main",
+		  "value": "<h2>Feladatok</h2><p>Els&#337; feladat: <a href='/?key=first'>tov&#225;bb</a></p><p>M&#225;sodik feladat: <a href='/?key=second'>tov&#225;bb</a></p>",
+		  "deleted": false
+		},
+		{
+		  "id": 2,
+		  "key": "first",
+		  "value": "<h2>Els&#337; feladat</h2><p>Az adatkommunik&#225;ci&#243;hoz &#233;s az adatb&#225;zis lek&#233;rdez&#233;shez p&#233;ldak&#233;nt tekintsd meg a com.xcite.javatest.action.web.Test oszt&#225;lyt &#233;s a hozz&#225; kapcsol&#243;d&#243; test.jsp &#225;llom&#225;nyt, az elk&#233;sz&#237;tend&#337; oszt&#225;ly v&#225;z&#225;t megtal&#225;lod itt:  com.xcite.javatest.action.web.UserList , valamint a userList.jsp kapcsol&#243;d&#243; &#225;llom&#225;nyt haszn&#225;ld, a fejleszt&#233;si folyamat eredm&#233;ny&#233;t itt tekintheted meg: <a href='http://localhost/userlist'>http://localhost/userlist<a><br>A HTML k&#243;dot jsp vagy js oldalon &#233;p&#237;tsd fel.</p><p><ul><li>K&#233;rdezz&#252;k le az 'xjfw.account' t&#225;bl&#225;b&#243;l az adatokat, &#233;s ezt jelen&#237;ts&#252;k meg egy egyszer&#369; html t&#225;bl&#225;zatban a '/userlist' oldalon, l&#233;trehoz&#225;si d&#225;tum szerint sorba rendezve.</li><li>A t&#225;bl&#225;zatban minden sorhoz jelen&#237;ts&#252;nk meg egy szerkeszt&#233;s gombot / ikont, amire kattintva k&#252;l&#246;n oldalon j&#246;jj&#246;n be egy szerkeszt&#233;s fel&#252;let, amit egy post h&#237;v&#225;ssal a szerverre el lehessen k&#252;ldeni &#233;s az adatb&#225;zisban a m&#243;dos&#237;t&#225;sok t&#246;rt&#233;njenek meg.</li><li>A t&#225;bl&#225;zatban minden sorhoz jelen&#237;ts&#252;nk meg egy t&#246;rl&#233;s gombot, ami ajaxos-an &#225;ll&#237;tsa a sor adatb&#225;zis 'deleted' &#233;rt&#233;k&#233;t 'true'-ra, &#233;s ezzel a t&#225;bl&#225;zatb&#243;l t&#246;r&#246;lje a sort.</li><li>Az elk&#233;sz&#252;lt userList oldalt eg&#233;sz&#237;tsd ki egy email c&#237;m sz&#369;r&#337;vel ami csak a megadott sz&#246;veg tartalmaz&#225;sa eset&#233;n jelen&#237;ti meg az adott account sort.</li></ul></p>",
+		  "deleted": false
+		},
+		{
+		  "id": 3,
+		  "key": "second",
+		  "value": "<h2>M&#225;sodik feladat</h2><p>A 'com.xcite.javatest.action.standalone.UserStat' class k&#233;t f&#225;jlt olvas be, melyekb&#337;l egy egyszer&#369; statisztik&#225;t sz&#225;mol.</p><p><ul><li>Az 'isTest' param&#233;ter 'false' &#233;rt&#233;ke eset&#233;n a statisztika nem fut le, jav&#237;tani sz&#252;ks&#233;ges az algoritmust, hogy mindk&#233;t esetben kapjunk eredm&#233;nyt.</li><li>Legyen egy &#250;j statisztika, ami kisz&#225;molja, hogy az egyes h&#243;napokban h&#225;ny regisztr&#225;ci&#243; j&#246;tt l&#233;tre.</li><li>Legyen egy &#250;j statisztika, ami kijelzi, hogy az egyes h&#237;rlev&#233;l list&#225;kra az egyes h&#243;napokban mennyi feliratkoz&#225;s j&#246;tt l&#233;tre.</li><li>Legyen egy &#250;j statisztika, ahol l&#225;that&#243;, hogy az egyes h&#237;rlev&#233;l list&#225;kon h&#225;ny olyan akt&#237;v feliratkozott van, aki 2015 ut&#225;n regisztr&#225;lt.</li><li>Az adatokat tartalmaz&#337; k&#233;t f&#225;jlb&#243;l van egy egy json verzi&#243;. Egy &#250;j class-ban ezekb&#337;l a f&#225;jlokb&#243;l olvassa be az adatokat &#233;s sz&#225;molja ki a statisztik&#225;kat.</li></ul></p>",
+		  "deleted": false
+		}
+	]
+}

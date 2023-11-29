@@ -1,0 +1,9 @@
+{
+	"tableName":"xjfw.account_tokens",
+	"columns":[
+		{"name":"id","JavaClassName":"java.lang.Integer"},
+		{"name":"token","JavaClassName":"java.lang.String"},
+		{"name":"accountId","JavaClassName":"java.lang.Integer"},
+		{"name":"deleted","JavaClassName":"java.lang.Boolean"}
+	]
+}

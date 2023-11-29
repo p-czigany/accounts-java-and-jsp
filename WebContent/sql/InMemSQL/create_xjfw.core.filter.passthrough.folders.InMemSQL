@@ -1,0 +1,13 @@
+{
+	"tableName":"xjfw.core.filter.passthrough.folders",
+	"columns":[
+		{"name":"id","JavaClassName":"java.lang.Integer"},
+		{"name":"folder","JavaClassName":"java.lang.String"},
+		{"name":"deleted","JavaClassName":"java.lang.Boolean"}
+	],
+	"rows":[
+		{"folder":"/images/","deleted":false},
+		{"folder":"/css/","deleted":false},
+		{"folder":"/css/fonts/","deleted":false}
+	]
+}

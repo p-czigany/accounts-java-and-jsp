@@ -1,0 +1,9 @@
+{
+	"tableName":"xjfw.menuactions",
+	"columns":[
+		{"name":"id","JavaClassName":"java.lang.Integer"},
+		{"name":"actionClass","JavaClassName":"java.lang.String"},
+		{"name":"displayName","JavaClassName":"java.lang.String"},
+		{"name":"deleted","JavaClassName":"java.lang.Boolean"}
+	]
+}

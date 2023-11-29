@@ -1,0 +1,9 @@
+{
+	"tableName":"xjfw.account.groups",
+	"columns":[
+		{"name":"id","JavaClassName":"java.lang.Integer"},
+		{"name":"accountId","JavaClassName":"java.lang.Integer"},
+		{"name":"groupId","JavaClassName":"java.lang.Integer"},
+		{"name":"deleted","JavaClassName":"java.lang.Boolean"}
+	]
+}

@@ -1,0 +1,10 @@
+{
+	"tableName":"session",
+	"columns":[
+		{"name":"id","JavaClassName":"java.lang.Integer"},
+		{"name":"key","JavaClassName":"java.lang.String"},
+		{"name":"data","JavaClassName":"java.lang.String"},
+		{"name":"lastseen","JavaClassName":"java.util.Date"},
+		{"name":"deleted","JavaClassName":"java.lang.Boolean"}
+	]
+}

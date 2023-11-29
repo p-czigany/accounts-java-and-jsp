@@ -1,0 +1,38 @@
+{
+  "tableName": "xjfw.core.urlmapping",
+  "columns": [
+    {
+      "name": "id",
+      "JavaClassName": "java.lang.Integer"
+    },
+    {
+      "name": "url",
+      "JavaClassName": "java.lang.String"
+    },
+    {
+      "name": "action",
+      "JavaClassName": "java.lang.String"
+    },
+    {
+      "name": "deleted",
+      "JavaClassName": "java.lang.Boolean"
+    }
+  ],
+  "rows": [
+    {
+      "url": "/",
+      "action": "com.xcite.javatest.action.web.Test",
+      "deleted": false
+    },
+    {
+      "url": "/api/TestAjaxCall",
+      "action": "com.xcite.javatest.action.api.TestAjaxCall",
+      "deleted": false
+    },
+    {
+      "url": "/userlist",
+      "action": "com.xcite.javatest.action.web.UserList",
+      "deleted": false
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+	"tableName":"xjfw.configuration",
+	"columns":[
+		{"name":"id","JavaClassName":"java.lang.Integer"},
+		{"name":"key","JavaClassName":"java.lang.String"},
+		{"name":"value","JavaClassName":"java.lang.String"},
+		{"name":"deleted","JavaClassName":"java.lang.Boolean"}
+	],
+	"rows":[
+		{"key":"xjfw.filter.daemon.enabled","value":"true"},	
+		{"key":"xjfw.site.config.mode","value":"on"}
+	]
+}

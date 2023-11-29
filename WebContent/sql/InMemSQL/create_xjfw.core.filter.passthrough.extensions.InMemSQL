@@ -1,0 +1,20 @@
+{
+	"tableName":"xjfw.core.filter.passthrough.extensions",
+	"columns":[
+		{"name":"id","JavaClassName":"java.lang.Integer"},
+		{"name":"extension","JavaClassName":"java.lang.String"},
+		{"name":"deleted","JavaClassName":"java.lang.Boolean"}
+	],
+	"rows":[
+		{"extension":".jsp",deleted:false},
+		{"extension":".html",deleted:false},
+		{"extension":".js",deleted:false},
+		{"extension":".css",deleted:false},
+		{"extension":".png",deleted:false},
+		{"extension":".otf",deleted:false},
+		{"extension":".jpg",deleted:false},
+		{"extension":".woff",deleted:false},
+		{"extension":".ico",deleted:false},
+		{"extension":".woff2",deleted:false}
+	]
+}

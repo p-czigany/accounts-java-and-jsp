@@ -1,0 +1,8 @@
+{
+	"tableName":"xjfw.authentication.groups",
+	"columns":[
+		{"name":"id","JavaClassName":"java.lang.Integer"},
+		{"name":"name","JavaClassName":"java.lang.String"},
+		{"name":"deleted","JavaClassName":"java.lang.Boolean"}
+	]	
+}
