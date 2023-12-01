@@ -25,6 +25,7 @@
                     <th>Is Activated?</th>
                     <th>Is Deleted?</th>
                     <th>Password</th>
+                    <th>Edit</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,6 +47,7 @@
                     <td><%= activated %></td>
                     <td><%= deleted %></td>
                     <td><%= password %></td>
+                    <td><a href=\editUser?id=<%= id %>>Edit</a></td>
                 </tr>
                 <%
                     }
