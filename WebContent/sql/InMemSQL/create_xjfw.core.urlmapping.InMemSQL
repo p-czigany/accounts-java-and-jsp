@@ -33,6 +33,11 @@
       "url": "/userlist",
       "action": "com.xcite.javatest.action.web.UserList",
       "deleted": false
+    },
+    {
+      "url": "/edituser",
+      "action": "com.xcite.javatest.action.web.EditUser",
+      "deleted": false
     }
   ]
 }

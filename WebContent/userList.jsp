@@ -47,7 +47,7 @@
                     <td><%= activated %></td>
                     <td><%= deleted %></td>
                     <td><%= password %></td>
-                    <td><a href=\editUser?id=<%= id %>>Edit</a></td>
+                    <td><a href=/edituser?id=<%= id %>>Edit</a></td>
                 </tr>
                 <%
                     }

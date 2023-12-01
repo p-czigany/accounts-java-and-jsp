@@ -37,11 +37,13 @@ public class ParameterMap {
 			if (uri != null && uri.contains("jsonservice") && queryString != null && queryString.startsWith("uri=")) {
 				queryString = queryString.replace("uri=", "");
 				parameters.put("uri", queryString);
+        		System.out.println("uri: " + queryString);
 			} else {
 				while (getParameterNames.hasMoreElements()) {
 					String key = (String) getParameterNames.nextElement();
 					String value = request.getParameter(key);
 					parameters.put(key, value);
+          			System.out.println("one parameter is: key: " + key + "; value: " + value);
 				}
 			}
 		} else {
