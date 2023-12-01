@@ -29,8 +29,7 @@
             </thead>
             <tbody>
                 <%
-
-List<Map<String, Object>> userList = (List<Map<String, Object>>) result.getObject("userList");
+                List<Map<String, Object>> userList = (List<Map<String, Object>>) result.getObject("userList");
                 if (userList != null) {
                     for (Map<String, Object> user : userList) {
                         String id = user.get("id").toString();
