@@ -15,11 +15,7 @@ public class UserList extends IWebAction {
 	public ProcessResult processRequest(ParameterMap parameterMap) throws Throwable {
 		ProcessResult result = ProcessResult.createProcessDispatchResult("userList");
 
-		// Fetch data from the 'xjfw.account' table
-		List<Map<String, Object>> userList = DataBase.select(new SqlQuery("xjfw.account"));
-
-		// Pass the userList to the JSP file
-		result.addData("userList", userList);
+		result.addData("userList", getUserList());
 
 		return result;
 	}
@@ -27,5 +23,11 @@ public class UserList extends IWebAction {
 	@Override
 	public String getAuthenticaionClassname() {
 		return null;
+	}
+
+	private List<Map<String, Object>> getUserList() {
+		SqlQuery q = new SqlQuery("xjfw.account");
+		q.order.add("createDate");
+		return DataBase.select(q);
 	}
 }
