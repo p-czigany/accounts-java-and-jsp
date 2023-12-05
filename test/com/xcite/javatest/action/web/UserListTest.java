@@ -31,27 +31,27 @@ public class UserListTest {
   @Test
   void givenStaticMethodWithArgs_whenMocked_thenReturnsMockSuccessfully() throws Throwable {
     // Arrange
-    List<Map<String, Object>> userData = new ArrayList<>();
+//    List<Map<String, Object>> userData = new ArrayList<>();
     Map<String, Object> user1 = new HashMap<>();
     user1.put("id", 1);
     user1.put("email", "user1@xcite.hu");
-    userData.add(user1);
+//    userData.add(user1);
     Map<String, Object> user2 = new HashMap<>();
     user2.put("id", 2);
     user2.put("email", "user2@xcite.hu");
-    userData.add(user2);
+//    userData.add(user2);
 
-    SqlQuery query = new SqlQuery("dummy_table");
+//    SqlQuery query = new SqlQuery("dummy_table");
 
-    try (MockedStatic<DataBase> utilities = Mockito.mockStatic(DataBase.class)) {
-      utilities.when(() -> DataBase.select(query)).thenReturn(userData);
+//    try (MockedStatic<DataBase> utilities = Mockito.mockStatic(DataBase.class)) {
+//      utilities.when(() -> DataBase.select(query)).thenReturn(userData);
 
       // Act
       List<Map<String, Object>> result = (List<Map<String, Object>>) userList.processRequest(mockParameterMap).getObject("userList");
 
       // Assert
       assertThat(result).contains(user2, user1);
-    }
+//    }
   }
 
   @Test

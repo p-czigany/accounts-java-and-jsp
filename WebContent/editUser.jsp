@@ -11,11 +11,11 @@
 </head>
 <body>
     <h1>Edit User</h1>
+    <form action="saveUser" method="post">
         <table>
             <thead>
                 <tr>
                     <th>Email</th>
-                    <th>Time of Creation</th>
                     <th>Is Activated?</th>
                     <th>Is Deleted?</th>
                     <th>Password</th>
@@ -28,15 +28,13 @@
                     String email = userData.get("email").toString();
                     String activated = userData.get("activated").toString();
                     String deleted = userData.get("deleted").toString();
-                    String createDate = userData.get("createDate").toString();
                     String password = userData.get("password").toString();
                 %>
                 <tr>
-                    <td><%= email %></td>
-                    <td><%= createDate %></td>
-                    <td><%= activated %></td>
-                    <td><%= deleted %></td>
-                    <td><%= password %></td>
+                    <td><input type="text" name="email" value="<%= email %>"></td>
+                    <td><input type="checkbox" name="activated" <%= activated.equals("true") ? "checked" : "" %>></td>
+                    <td><input type="checkbox" name="deleted" <%= deleted.equals("true") ? "checked" : "" %>></td>
+                    <td><input type="password" name="password" value="<%= password %>"></td>
                 </tr>
                 <%
                 }
@@ -49,5 +47,7 @@
                 </c:forEach> -->
             </tbody>
         </table>
+    <input type="submit" value="Save">
+    </form>
 </body>
 </html>
