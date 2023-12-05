@@ -39,12 +39,6 @@
                 <%
                 }
                 %>
-                <!-- <c:forEach var="entry" items="${userData}">
-                    <tr>
-                        <td>${entry.key}</td>
-                        <td>${entry.value}</td>
-                    </tr>
-                </c:forEach> -->
             </tbody>
         </table>
     <input type="submit" value="Save">
