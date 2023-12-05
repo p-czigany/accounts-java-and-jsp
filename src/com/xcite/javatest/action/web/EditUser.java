@@ -28,7 +28,6 @@ public class EditUser extends IWebAction {
 //        Optional<Map<String, Object>> userData = userDataList.stream().filter(user -> Integer.valueOf(userId).equals(user.get("id"))).findFirst();
         System.out.println("I have the user data! It's: " + userData);
 
-        // Add the user data to the result
         result.addData("userData", userData);
 
         return result;
