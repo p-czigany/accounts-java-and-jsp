@@ -13,16 +13,16 @@ public class User {
   private Integer listId;
   private LocalDateTime subDate;
 
-  private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+  private static final DateTimeFormatter DATE_TIME_FORMATTER =
+      DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-  public User(
-      String idString, String firstName, String lastName, String email, String regDateString) {
+  public User(String[] userFields) {
     this(
-        Integer.valueOf(idString),
-        firstName,
-        lastName,
-        email,
-        LocalDateTime.parse(regDateString, DATE_TIME_FORMATTER));
+        Integer.valueOf(userFields[0]),
+        userFields[1],
+        userFields[2],
+        userFields[3],
+        LocalDateTime.parse(userFields[4], DATE_TIME_FORMATTER));
   }
 
   public User(Integer id, String firstName, String lastName, String email, LocalDateTime regDate) {
@@ -77,7 +77,11 @@ public class User {
     return subDate;
   }
 
-  public void setSubDate(String subDate) {
-    this.subDate = LocalDateTime.parse(subDate, DATE_TIME_FORMATTER);
+  public void setSubDate(LocalDateTime subDate) {
+    this.subDate = subDate;
+  }
+
+  public void setSubDate(String subDateString) {
+    this.subDate = LocalDateTime.parse(subDateString, DATE_TIME_FORMATTER);
   }
 }

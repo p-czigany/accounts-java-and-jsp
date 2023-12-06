@@ -29,13 +29,12 @@ public class UserStat {
 
         for (i = 1; i < userData.length; i++) {
 //			temp is the array of columns / fields of the user
-			String[] temp = userData[i].split(",");
+			User user = new User(userData[i].split(","));
 
-            User user = new User(temp[0], temp[1], temp[2], temp[3], temp[4]);
 	//		iterate over user subscription lines
 			for (i = 1; i < subscriptionData.length; i++) {
 	//			temp is the array of columns / fields of the subscription
-				temp = subscriptionData[i].split(",");
+				String[] temp = subscriptionData[i].split(",");
 //				wait for the users own subscription
 				if (user.getId() == Integer.parseInt(temp[0])) {
 					user.setSubbed(Boolean.parseBoolean(temp[1]));

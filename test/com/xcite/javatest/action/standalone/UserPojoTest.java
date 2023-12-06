@@ -9,8 +9,11 @@ public class UserPojoTest {
 
   @Test
   void testCreationOfNewUserObject() {
-    User myUser =
-        new User("86396", "Reyansh", "Carter", "reyansh.carter@yahoo.com", "2013-07-13 03:26:43");
+    String[] userFields = {
+      "86396", "Reyansh", "Carter", "reyansh.carter@yahoo.com", "2013-07-13 03:26:43"
+    };
+
+    User myUser = new User(userFields);
 
     assertThat(myUser.getId()).isEqualTo(86396);
     assertThat(myUser.getFirstName()).isEqualTo("Reyansh");
