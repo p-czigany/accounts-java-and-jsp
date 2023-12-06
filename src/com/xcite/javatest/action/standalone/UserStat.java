@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 public class UserStat {
 
@@ -34,12 +35,11 @@ public class UserStat {
 	//		iterate over user subscription lines
 			for (i = 1; i < subscriptionData.length; i++) {
 	//			temp is the array of columns / fields of the subscription
-				String[] temp = subscriptionData[i].split(",");
+				Subscription subscription = new Subscription(subscriptionData[i].split(","));
 //				wait for the users own subscription
-				if (user.getId() == Integer.parseInt(temp[0])) {
-					user.setSubbed(Boolean.parseBoolean(temp[1]));
-					user.setListId(Integer.parseInt(temp[2]));
-					user.setSubDate(temp[3]);
+				if (Objects.equals(user.getId(), subscription.getUserId())) {
+					user.setSubscription(subscription);
+
 					break;
 				}
 			}

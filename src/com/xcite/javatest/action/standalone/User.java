@@ -12,6 +12,7 @@ public class User {
   private Boolean subbed;
   private Integer listId;
   private LocalDateTime subDate;
+  private Subscription subscription;
 
   private static final DateTimeFormatter DATE_TIME_FORMATTER =
       DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -22,15 +23,23 @@ public class User {
         userFields[1],
         userFields[2],
         userFields[3],
-        LocalDateTime.parse(userFields[4], DATE_TIME_FORMATTER));
+        LocalDateTime.parse(userFields[4], DATE_TIME_FORMATTER),
+        null);
   }
 
-  public User(Integer id, String firstName, String lastName, String email, LocalDateTime regDate) {
+  public User(
+      Integer id,
+      String firstName,
+      String lastName,
+      String email,
+      LocalDateTime regDate,
+      Subscription subscription) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.regDate = regDate;
+    this.subscription = subscription;
   }
 
   public Integer getId() {
@@ -83,5 +92,13 @@ public class User {
 
   public void setSubDate(String subDateString) {
     this.subDate = LocalDateTime.parse(subDateString, DATE_TIME_FORMATTER);
+  }
+
+  public Subscription getSubscription() {
+    return subscription;
+  }
+
+  public void setSubscription(Subscription subscription) {
+    this.subscription = subscription;
   }
 }
