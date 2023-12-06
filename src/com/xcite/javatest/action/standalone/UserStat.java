@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.Month;
 import java.util.*;
 import java.util.Map.Entry;
@@ -19,38 +18,35 @@ public class UserStat {
 
 	public static void main(String[] args) {
 		stat1();
+	    System.out.println("\t-\t-\t-");
 		stat2();
 	}
 
 	private static void stat1() {
-		printEntries(usersByEmailDomain());
+		printStatEntries(usersByEmailDomain());
 	}
 
 	private static void stat2() {
-		printEntries(registrationsByMonth());
+		printStatEntries(registrationsByMonth());
 	}
 
 	private static Map<String, Integer> usersByEmailDomain() {
-		return getUsersFromFile().stream()
+		List<User> users = getUsersFromFile();
+
+		return users.stream()
 				.collect(Collectors.toMap(User::getEmailDomain, u -> 1, Integer::sum));
 	}
 
 	private static Map<Month, Integer> registrationsByMonth() {
-		Map<Month, Integer> baseStat = new HashMap<>();
 		List<User> users = getUsersFromFile();
 
-		for (User user : users) {
-			Month key = user.getRegMonth();
-			baseStat.put(key, baseStat.getOrDefault(key, 0) + 1);
-		}
-
-		return baseStat;
+		return users.stream()
+				.collect(Collectors.toMap(User::getRegMonth, u -> 1, Integer::sum));
 	}
 
-	private static <K> void printEntries(Map<K, Integer> subscriptionAmounts) {
-		for (Entry<K, Integer> entry : subscriptionAmounts.entrySet()) {
-			System.out.println(entry.getKey() + "\t" + entry.getValue());
-		}
+	private static <K> void printStatEntries(Map<K, Integer> statEntries) {
+		Map<K, Integer> sortedMap = new TreeMap<>(statEntries);
+		sortedMap.forEach((key, value) -> System.out.println(key + "\t" + value));
 	}
 
 	private static List<User> getUsersFromFile() {
