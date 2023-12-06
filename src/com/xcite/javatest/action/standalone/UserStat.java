@@ -17,43 +17,53 @@ public class UserStat {
 	}
 
 	private static void stat1() {
+//		give names to 4 int variables
 		int i, j, k, l;
+//		copy file content to string array
 		String[] userData = getFile("WebContent/data/users.txt").split("\n");
+//		copy file content to string array
 		String[] subscriptionData = getFile("WebContent/data/newslettersubs.txt").split("\n");
 
 		Map<String, Integer> baseStat = new HashMap<String, Integer>();
-		for (i = 1; i < userData.length; i++) {
+//		iterate over user data lines
+
+        for (i = 1; i < userData.length; i++) {
+//			temp is the array of columns / fields of the user
 			String[] temp = userData[i].split(",");
 
-			int userId = Integer.parseInt(temp[0]);
-			String firstName = temp[1];
-			String lastName = temp[2];
-			String email = temp[3];
-			String regDate = temp[4];
-			boolean subbed = false;
-			int listId = 0;
-			String subDate = "";
+            User user = new User(temp[0], temp[1], temp[2], temp[3], temp[4]);
+	//		iterate over user subscription lines
 			for (i = 1; i < subscriptionData.length; i++) {
+	//			temp is the array of columns / fields of the subscription
 				temp = subscriptionData[i].split(",");
-				if (userId == Integer.parseInt(temp[0])) {
-					subbed = Boolean.parseBoolean(temp[1]);
-					listId = Integer.parseInt(temp[2]);
-					subDate = temp[3];
+//				wait for the users own subscription
+				if (user.getId() == Integer.parseInt(temp[0])) {
+					user.setSubbed(Boolean.parseBoolean(temp[1]));
+					user.setListId(Integer.parseInt(temp[2]));
+					user.setSubDate(temp[3]);
 					break;
 				}
 			}
 
-			String key = email.split("@")[1];
+			// key is the email domain
+			String key = user.getEmail().split("@")[1];
+			// get current count for the email domain
 			Integer count = baseStat.get(key);
+			// if the key is missing, then initialize the count with zero
 			if (count == null) {
 				count = 0;
 			}
+
 			baseStat.put(key, count + 1);
 			if (isTest && i >= 10) {
 				break;
 			}
 		}
-		for (Entry<String, Integer> entry : baseStat.entrySet()) {
+		printEntrySubscriptions(baseStat);
+	}
+
+	private static void printEntrySubscriptions(Map<String, Integer> subscriptionAmounts) {
+		for (Entry<String, Integer> entry : subscriptionAmounts.entrySet()) {
 			System.out.println(entry.getKey() + "\t" + entry.getValue());
 		}
 	}
