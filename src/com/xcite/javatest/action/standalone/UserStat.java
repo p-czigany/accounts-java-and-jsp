@@ -4,60 +4,41 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Objects;
 
 public class UserStat {
 
-	private static boolean isTest = true;
+	private static boolean isTest = false;
 
 	public static void main(String[] args) {
 		stat1();
 	}
 
 	private static void stat1() {
-//		give names to 4 int variables
-		int i, j, k, l;
-//		copy file content to string array
-		String[] userData = getFile("WebContent/data/users.txt").split("\n");
-//		copy file content to string array
+
 		String[] subscriptionData = getFile("WebContent/data/newslettersubs.txt").split("\n");
+		Map<Integer, Subscription> subscriptions = new HashMap<>();
+		for (int i = 1; i < subscriptionData.length; i++) {
+			Subscription subscription = new Subscription(subscriptionData[i].split(","));
+			subscriptions.put(subscription.getUserId(), subscription);
+		}
 
-		Map<String, Integer> baseStat = new HashMap<String, Integer>();
-//		iterate over user data lines
-
-        for (i = 1; i < userData.length; i++) {
-//			temp is the array of columns / fields of the user
+		Map<String, Integer> baseStat = new HashMap<>();
+		String[] userData = getFile("WebContent/data/users.txt").split("\n");
+		int numberOfParsedUsers = isTest ? 10 : userData.length - 1;
+		for (int i = 1; i <= numberOfParsedUsers; i++) {
 			User user = new User(userData[i].split(","));
+			user.setSubscription(subscriptions.get(user.getId()));
 
-	//		iterate over user subscription lines
-			for (i = 1; i < subscriptionData.length; i++) {
-	//			temp is the array of columns / fields of the subscription
-				Subscription subscription = new Subscription(subscriptionData[i].split(","));
-//				wait for the users own subscription
-				if (Objects.equals(user.getId(), subscription.getUserId())) {
-					user.setSubscription(subscription);
-
-					break;
-				}
-			}
-
-			// key is the email domain
 			String key = user.getEmail().split("@")[1];
-			// get current count for the email domain
 			Integer count = baseStat.get(key);
-			// if the key is missing, then initialize the count with zero
 			if (count == null) {
 				count = 0;
 			}
-
 			baseStat.put(key, count + 1);
-			if (isTest && i >= 10) {
-				break;
-			}
 		}
+
 		printEntrySubscriptions(baseStat);
 	}
 
