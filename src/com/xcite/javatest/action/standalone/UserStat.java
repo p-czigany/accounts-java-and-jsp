@@ -10,8 +10,8 @@ import java.util.stream.Collectors;
 
 public class UserStat {
 
-	private static final boolean isTest = false;
-	private static final int NUMBER_OF_USERS_IN_TEST = 10;
+	private static final boolean isTest = true;
+	private static final int NUMBER_OF_USERS_IN_TEST = 20000;
 	private static final int HEADER_ROWS = 1;
 
 	public static void main(String[] args) {
@@ -20,6 +20,9 @@ public class UserStat {
 		stat2();
 		System.out.println("\t-\t-\t-");
 		stat3();
+		System.out.println("\t-\t-\t-");
+		stat4();
+
 	}
 
 	private static void stat1() {
@@ -32,6 +35,10 @@ public class UserStat {
 
 	private static void stat3() {
 		printStatEntries(subscriptionsByMonthByNewsletter());
+	}
+
+	private static void stat4() {
+		printStatEntries(currentlyActiveSubscriptionsByNewsletterOfUsersRegisteredAfter2015());
 	}
 
 	private static Map<String, Integer> usersByEmailDomain() {
@@ -58,6 +65,36 @@ public class UserStat {
 								Subscription::getListId,
 								Collectors.summingInt(subscription -> 1))));
 	}
+
+	private static Map<Integer, Integer> currentlyActiveSubscriptionsByNewsletterOfUsersRegisteredAfter2015() {
+		List<User> users = getUsersFromFile();
+		List<Subscription> subscriptions = getSubscriptionsFromFile();
+		Map<Integer, List<Subscription>> activeSubscriptionsByUser = activeSubscriptionsByUser(subscriptions);
+
+		List<User> usersRegisteredAfter2015 = users.stream()
+				.filter(user -> user.getRegDate().getYear() > 2015)
+				.collect(Collectors.toList());
+
+		Map<Integer, Integer> result = new HashMap<>();
+		for (User user : usersRegisteredAfter2015) {
+			List<Subscription> userSubscriptions = activeSubscriptionsByUser.get(user.getId());
+			if (userSubscriptions != null) {
+				for (Subscription subscription : userSubscriptions) {
+					result.put(subscription.getListId(), result.getOrDefault(subscription.getListId(), 0) + 1);
+				}
+			}
+		}
+
+		return result;
+	}
+
+	private static Map<Integer, List<Subscription>> activeSubscriptionsByUser(List<Subscription> subscriptions) {
+		return subscriptions.stream()
+				.filter(Subscription::getSubscribed)
+				.collect(Collectors.groupingBy(Subscription::getUserId));
+	}
+
+
 
 	private static <K, V> void printStatEntries(Map<K, V> map) {
 		printEntries(map, "");

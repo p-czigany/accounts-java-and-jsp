@@ -15,9 +15,9 @@ public class User {
   private final String lastName;
   private final String email;
   private final LocalDateTime regDate;
-  private Boolean subbed;
-  private Integer listId;
-  private LocalDateTime subDate;
+//  private Boolean subbed;
+//  private Integer listId;
+//  private LocalDateTime subDate;
   private List<Subscription> subscriptions;
 
   private static final DateTimeFormatter DATE_TIME_FORMATTER =
@@ -72,33 +72,33 @@ public class User {
     return regDate;
   }
 
-  public boolean isSubbed() {
-    return subbed;
-  }
+//  public boolean isSubbed() {
+//    return subbed;
+//  }
 
-  public void setSubbed(boolean subbed) {
-    this.subbed = subbed;
-  }
+//  public void setSubbed(boolean subbed) {
+//    this.subbed = subbed;
+//  }
 
-  public int getListId() {
-    return listId;
-  }
+//  public int getListId() {
+//    return listId;
+//  }
 
-  public void setListId(int listId) {
-    this.listId = listId;
-  }
+//  public void setListId(int listId) {
+//    this.listId = listId;
+//  }
 
-  public LocalDateTime getSubDate() {
-    return subDate;
-  }
+//  public LocalDateTime getSubDate() {
+//    return subDate;
+//  }
 
-  public void setSubDate(LocalDateTime subDate) {
-    this.subDate = subDate;
-  }
+//  public void setSubDate(LocalDateTime subDate) {
+//    this.subDate = subDate;
+//  }
 
-  public void setSubDate(String subDateString) {
-    this.subDate = LocalDateTime.parse(subDateString, DATE_TIME_FORMATTER);
-  }
+//  public void setSubDate(String subDateString) {
+//    this.subDate = LocalDateTime.parse(subDateString, DATE_TIME_FORMATTER);
+//  }
 
   public List<Subscription> getSubscriptions() {
     return subscriptions;
