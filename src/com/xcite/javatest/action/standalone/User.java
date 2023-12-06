@@ -2,6 +2,7 @@ package com.xcite.javatest.action.standalone;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class User {
   private final Integer id;
@@ -12,7 +13,7 @@ public class User {
   private Boolean subbed;
   private Integer listId;
   private LocalDateTime subDate;
-  private Subscription subscription;
+  private List<Subscription> subscriptions;
 
   private static final DateTimeFormatter DATE_TIME_FORMATTER =
       DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -33,13 +34,13 @@ public class User {
       String lastName,
       String email,
       LocalDateTime regDate,
-      Subscription subscription) {
+      List<Subscription> subscriptions) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.regDate = regDate;
-    this.subscription = subscription;
+    this.subscriptions = subscriptions;
   }
 
   public Integer getId() {
@@ -94,11 +95,11 @@ public class User {
     this.subDate = LocalDateTime.parse(subDateString, DATE_TIME_FORMATTER);
   }
 
-  public Subscription getSubscription() {
-    return subscription;
+  public List<Subscription> getSubscriptions() {
+    return subscriptions;
   }
 
-  public void setSubscription(Subscription subscription) {
-    this.subscription = subscription;
+  public void setSubscriptions(List<Subscription> subscriptions) {
+    this.subscriptions = subscriptions;
   }
 }
