@@ -7,11 +7,12 @@ import java.io.IOException;
 import java.time.YearMonth;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class UserStat {
 
 	private static final boolean isTest = true;
-	private static final int NUMBER_OF_USERS_IN_TEST = 20000;
+	private static final int NUMBER_OF_USERS_IN_TEST = 10;
 	private static final int HEADER_ROWS = 1;
 
 	public static void main(String[] args) {
@@ -42,23 +43,23 @@ public class UserStat {
 	}
 
 	private static Map<String, Integer> usersByEmailDomain() {
-		List<User> users = getUsersFromFile();
+		Stream<User> users = getUsersFromFile();
 
-		return users.stream()
+		return users
 				.collect(Collectors.groupingBy(User::getEmailDomain, Collectors.summingInt(user -> 1)));
   	}
 
 	private static Map<YearMonth, Integer> registrationsByMonth() {
-		List<User> users = getUsersFromFile();
+		Stream<User> users = getUsersFromFile();
 
-		return users.stream()
+		return users
 				.collect(Collectors.groupingBy(User::getRegMonth, Collectors.summingInt(user -> 1)));
 	}
 
 	private static Map<YearMonth, Map<Integer, Integer>> subscriptionsByMonthByNewsletter() {
-		List<Subscription> subscriptions = getSubscriptionsFromFile();
+		Stream<Subscription> subscriptions = getSubscriptionsFromFile();
 
-		return subscriptions.stream()
+		return subscriptions
 				.collect(Collectors.groupingBy(
 						Subscription::getCreateMonth,
 						Collectors.groupingBy(
@@ -67,34 +68,24 @@ public class UserStat {
 	}
 
 	private static Map<Integer, Integer> currentlyActiveSubscriptionsByNewsletterOfUsersRegisteredAfter2015() {
-		List<User> users = getUsersFromFile();
-		List<Subscription> subscriptions = getSubscriptionsFromFile();
+		Stream<User> users = getUsersFromFile();
+		Stream<Subscription> subscriptions = getSubscriptionsFromFile();
 		Map<Integer, List<Subscription>> activeSubscriptionsByUser = activeSubscriptionsByUser(subscriptions);
 
-		List<User> usersRegisteredAfter2015 = users.stream()
+    	return users
 				.filter(user -> user.getRegDate().getYear() > 2015)
-				.collect(Collectors.toList());
-
-		Map<Integer, Integer> result = new HashMap<>();
-		for (User user : usersRegisteredAfter2015) {
-			List<Subscription> userSubscriptions = activeSubscriptionsByUser.get(user.getId());
-			if (userSubscriptions != null) {
-				for (Subscription subscription : userSubscriptions) {
-					result.put(subscription.getListId(), result.getOrDefault(subscription.getListId(), 0) + 1);
-				}
-			}
-		}
-
-		return result;
+				.flatMap(
+						user -> activeSubscriptionsByUser.getOrDefault(
+								user.getId(), Collections.emptyList()).stream()).collect(
+										Collectors.groupingBy(Subscription::getListId,
+												Collectors.summingInt(subscription -> 1)));
 	}
 
-	private static Map<Integer, List<Subscription>> activeSubscriptionsByUser(List<Subscription> subscriptions) {
-		return subscriptions.stream()
+	private static Map<Integer, List<Subscription>> activeSubscriptionsByUser(Stream<Subscription> subscriptions) {
+		return subscriptions
 				.filter(Subscription::getSubscribed)
 				.collect(Collectors.groupingBy(Subscription::getUserId));
 	}
-
-
 
 	private static <K, V> void printStatEntries(Map<K, V> map) {
 		printEntries(map, "");
@@ -113,21 +104,19 @@ public class UserStat {
 		}
 	}
 
-	private static List<User> getUsersFromFile() {
+	private static Stream<User> getUsersFromFile() {
 		String[] userData = getFile("WebContent/data/users.txt").split("\n");
 		return Arrays.stream(userData)
 				.skip(HEADER_ROWS)
 				.limit(isTest ? NUMBER_OF_USERS_IN_TEST : userData.length - 1)
-				.map(userFields -> new User(userFields.split(",")))
-				.collect(Collectors.toList());
+				.map(userFields -> new User(userFields.split(",")));
 	}
 
-	private static List<Subscription> getSubscriptionsFromFile() {
+	private static Stream<Subscription> getSubscriptionsFromFile() {
 		String[] subscriptionData = getFile("WebContent/data/newslettersubs.txt").split("\n");
 		return Arrays.stream(subscriptionData)
 				.skip(HEADER_ROWS)
-				.map(subscriptionRow -> new Subscription(subscriptionRow.split(",")))
-				.collect(Collectors.toList());
+				.map(subscriptionRow -> new Subscription(subscriptionRow.split(",")));
 	}
 
 	private static String getFile(String path) {
