@@ -72,13 +72,16 @@ public class UserStat {
 		Stream<Subscription> subscriptions = getSubscriptionsFromFile();
 		Map<Integer, List<Subscription>> activeSubscriptionsByUser = activeSubscriptionsByUser(subscriptions);
 
-    	return users
+		return users
 				.filter(user -> user.getRegDate().getYear() > 2015)
 				.flatMap(
-						user -> activeSubscriptionsByUser.getOrDefault(
-								user.getId(), Collections.emptyList()).stream()).collect(
-										Collectors.groupingBy(Subscription::getListId,
-												Collectors.summingInt(subscription -> 1)));
+						user ->
+								activeSubscriptionsByUser
+										.getOrDefault(user.getId(), Collections.emptyList())
+										.stream())
+				.collect(
+						Collectors.groupingBy(
+								Subscription::getListId, Collectors.summingInt(subscription -> 1)));
 	}
 
 	private static Map<Integer, List<Subscription>> activeSubscriptionsByUser(Stream<Subscription> subscriptions) {
@@ -88,16 +91,16 @@ public class UserStat {
 	}
 
 	private static <K, V> void printStatEntries(Map<K, V> map) {
-		printEntries(map, "");
+		printStatEntries(map, "");
 	}
 
-	private static <K, V> void printEntries(Map<K, V> map, String indent) {
+	private static <K, V> void printStatEntries(Map<K, V> map, String indent) {
 		Map<K, V> sortedMap = new TreeMap<>(map);
 		for (Map.Entry<K, V> entry : sortedMap.entrySet()) {
 			System.out.print(indent + entry.getKey() + ": ");
 			if (entry.getValue() instanceof Map<?, ?>) {
 				System.out.println();
-				printEntries((Map<?, ?>) entry.getValue(), indent + "\t");
+				printStatEntries((Map<?, ?>) entry.getValue(), indent + "\t");
 			} else {
 				System.out.println(entry.getValue());
 			}
