@@ -20,6 +20,8 @@ public class UserStat {
 		stat1();
 	    System.out.println("\t-\t-\t-");
 		stat2();
+		System.out.println("\t-\t-\t-");
+		stat3();
 	}
 
 	private static void stat1() {
@@ -30,24 +32,35 @@ public class UserStat {
 		printStatEntries(registrationsByMonth());
 	}
 
+	private static void stat3() {
+		printStatEntries(subscriptionsByMonthByNewsletter());
+	}
+
 	private static Map<String, Integer> usersByEmailDomain() {
 		List<User> users = getUsersFromFile();
 
 		return users.stream()
-				.collect(Collectors.toMap(User::getEmailDomain, u -> 1, Integer::sum));
+				.collect(Collectors.toMap(User::getEmailDomain, user -> 1, Integer::sum));
 	}
 
 	private static Map<YearMonth, Integer> registrationsByMonth() {
 		List<User> users = getUsersFromFile();
 
 		return users.stream()
-				.collect(Collectors.toMap(User::getRegMonth, u -> 1, Integer::sum));
+				.collect(Collectors.toMap(User::getRegMonth, user -> 1, Integer::sum));
+	}
+
+	private static Map<YearMonth, Integer> subscriptionsByMonthByNewsletter() {
+		List<Subscription> subscriptions = getSubscriptionsFromFile();
+
+		return subscriptions.stream()
+				.collect(Collectors.toMap(Subscription::getCreateMonth, subscription -> 1, Integer::sum));
 	}
 
 	private static <K> void printStatEntries(Map<K, Integer> statEntries) {
 		Map<K, Integer> sortedMap = new TreeMap<>(statEntries);
 		sortedMap.forEach((key, value) -> System.out.println(key + "\t" + value));
-//    	System.out.println("TOTAL: " + statEntries.values().stream().mapToInt(Integer::intValue).sum());
+    	System.out.println("TOTAL: " + statEntries.values().stream().mapToInt(Integer::intValue).sum());
 	}
 
 	private static List<User> getUsersFromFile() {
@@ -59,12 +72,12 @@ public class UserStat {
 				.collect(Collectors.toList());
 	}
 
-	private static Map<Integer, List<Subscription>> getUserSubscriptionsFromFile() {
+	private static List<Subscription> getSubscriptionsFromFile() {
 		String[] subscriptionData = getFile("WebContent/data/newslettersubs.txt").split("\n");
 		return Arrays.stream(subscriptionData)
 				.skip(HEADER_ROWS)
 				.map(subscriptionRow -> new Subscription(subscriptionRow.split(",")))
-				.collect(Collectors.groupingBy(Subscription::getUserId, Collectors.toList()));
+				.collect(Collectors.toList());
 	}
 
 	private static String getFile(String path) {
