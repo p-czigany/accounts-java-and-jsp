@@ -1,6 +1,8 @@
 package com.xcite.javatest.action.standalone;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -101,5 +103,9 @@ public class User {
 
   public void setSubscriptions(List<Subscription> subscriptions) {
     this.subscriptions = subscriptions;
+  }
+
+  public Month getRegMonth() {
+    return getRegDate().getMonth();
   }
 }
