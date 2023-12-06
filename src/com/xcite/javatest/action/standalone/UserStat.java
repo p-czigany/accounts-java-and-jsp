@@ -38,27 +38,42 @@ public class UserStat {
 		List<User> users = getUsersFromFile();
 
 		return users.stream()
-				.collect(Collectors.toMap(User::getEmailDomain, user -> 1, Integer::sum));
-	}
+				.collect(Collectors.groupingBy(User::getEmailDomain, Collectors.summingInt(user -> 1)));
+  	}
 
 	private static Map<YearMonth, Integer> registrationsByMonth() {
 		List<User> users = getUsersFromFile();
 
 		return users.stream()
-				.collect(Collectors.toMap(User::getRegMonth, user -> 1, Integer::sum));
+				.collect(Collectors.groupingBy(User::getRegMonth, Collectors.summingInt(user -> 1)));
 	}
 
-	private static Map<YearMonth, Integer> subscriptionsByMonthByNewsletter() {
+	private static Map<YearMonth, Map<Integer, Integer>> subscriptionsByMonthByNewsletter() {
 		List<Subscription> subscriptions = getSubscriptionsFromFile();
 
 		return subscriptions.stream()
-				.collect(Collectors.toMap(Subscription::getCreateMonth, subscription -> 1, Integer::sum));
+				.collect(Collectors.groupingBy(
+						Subscription::getCreateMonth,
+						Collectors.groupingBy(
+								Subscription::getListId,
+								Collectors.summingInt(subscription -> 1))));
 	}
 
-	private static <K> void printStatEntries(Map<K, Integer> statEntries) {
-		Map<K, Integer> sortedMap = new TreeMap<>(statEntries);
-		sortedMap.forEach((key, value) -> System.out.println(key + "\t" + value));
-    	System.out.println("TOTAL: " + statEntries.values().stream().mapToInt(Integer::intValue).sum());
+	private static <K, V> void printStatEntries(Map<K, V> map) {
+		printEntries(map, "");
+	}
+
+	private static <K, V> void printEntries(Map<K, V> map, String indent) {
+		Map<K, V> sortedMap = new TreeMap<>(map);
+		for (Map.Entry<K, V> entry : sortedMap.entrySet()) {
+			System.out.print(indent + entry.getKey() + ": ");
+			if (entry.getValue() instanceof Map<?, ?>) {
+				System.out.println();
+				printEntries((Map<?, ?>) entry.getValue(), indent + "\t");
+			} else {
+				System.out.println(entry.getValue());
+			}
+		}
 	}
 
 	private static List<User> getUsersFromFile() {
