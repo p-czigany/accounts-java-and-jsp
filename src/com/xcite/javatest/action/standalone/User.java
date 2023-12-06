@@ -3,7 +3,10 @@ package com.xcite.javatest.action.standalone;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class User {
@@ -105,7 +108,7 @@ public class User {
     this.subscriptions = subscriptions;
   }
 
-  public Month getRegMonth() {
-    return getRegDate().getMonth();
+  public YearMonth getRegMonth() {
+    return YearMonth.of(regDate.getYear(), regDate.getMonth());
   }
 }

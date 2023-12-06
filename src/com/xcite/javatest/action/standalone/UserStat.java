@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.Month;
+import java.time.YearMonth;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
@@ -13,7 +14,6 @@ public class UserStat {
 
 	private static final boolean isTest = false;
 	private static final int NUMBER_OF_USERS_IN_TEST = 10;
-	private static final int HEADER_ROW_INDEX = 0;
 	private static final int HEADER_ROWS = 1;
 
 	public static void main(String[] args) {
@@ -37,7 +37,7 @@ public class UserStat {
 				.collect(Collectors.toMap(User::getEmailDomain, u -> 1, Integer::sum));
 	}
 
-	private static Map<Month, Integer> registrationsByMonth() {
+	private static Map<YearMonth, Integer> registrationsByMonth() {
 		List<User> users = getUsersFromFile();
 
 		return users.stream()
@@ -47,6 +47,7 @@ public class UserStat {
 	private static <K> void printStatEntries(Map<K, Integer> statEntries) {
 		Map<K, Integer> sortedMap = new TreeMap<>(statEntries);
 		sortedMap.forEach((key, value) -> System.out.println(key + "\t" + value));
+//    	System.out.println("TOTAL: " + statEntries.values().stream().mapToInt(Integer::intValue).sum());
 	}
 
 	private static List<User> getUsersFromFile() {
@@ -60,9 +61,8 @@ public class UserStat {
 
 	private static Map<Integer, List<Subscription>> getUserSubscriptionsFromFile() {
 		String[] subscriptionData = getFile("WebContent/data/newslettersubs.txt").split("\n");
-		List<String> subscriptionRows = new ArrayList<>(Arrays.asList(subscriptionData));
-		subscriptionRows.remove(HEADER_ROW_INDEX);
-		return subscriptionRows.stream()
+		return Arrays.stream(subscriptionData)
+				.skip(HEADER_ROWS)
 				.map(subscriptionRow -> new Subscription(subscriptionRow.split(",")))
 				.collect(Collectors.groupingBy(Subscription::getUserId, Collectors.toList()));
 	}
