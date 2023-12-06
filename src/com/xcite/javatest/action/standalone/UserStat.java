@@ -6,14 +6,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 import java.util.Map.Entry;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class UserStat {
 
-	private static boolean isTest = true;
+	private static boolean isTest = false;
 	private static final int NUMBER_OF_USERS_IN_TEST = 10;
 	private static final int HEADER_ROW_INDEX = 0;
+	private static final int HEADER_ROWS = 1;
 
 	public static void main(String[] args) {
 		stat1();
@@ -21,38 +21,9 @@ public class UserStat {
 
 	private static void stat1() {
 
-		String[] subscriptionData = getFile("WebContent/data/newslettersubs.txt").split("\n");
-		List<String> subscriptionRows = new ArrayList<>(Arrays.asList(subscriptionData));
-		subscriptionRows.remove(HEADER_ROW_INDEX);
-		Map<Integer, List<Subscription>> subscriptions = new HashMap<>();
-		for (String subscriptionRow: subscriptionRows) {
-			Subscription subscription = new Subscription(subscriptionRow.split(","));
-			Integer userId = subscription.getUserId();
-			if (subscriptions.containsKey(userId)) {
-				List<Subscription> subscriptionsList = subscriptions.get(userId);
-				subscriptionsList.add(subscription);
-				subscriptions.put(userId, subscriptionsList); // TODO: is this necessary?
-			} else {
-			subscriptions.put(userId, new ArrayList<>(Collections.singletonList(subscription))); }
-		}
-//		Map<Integer, Subscription> subscriptions = subscriptionRows.stream()
-//				.map(subscriptionRow -> new Subscription(subscriptionRow.split(",")))
-//				.collect(Collectors.toMap(Subscription::getUserId, Function.identity()));
-
-		Map<String, Integer> baseStat = new HashMap<>();
-		String[] userData = getFile("WebContent/data/users.txt").split("\n");
-		int numberOfParsedUsers = isTest ? NUMBER_OF_USERS_IN_TEST : userData.length - 1;
-		for (int i = 1; i <= numberOfParsedUsers; i++) {
-			User user = new User(userData[i].split(","));
-			user.setSubscriptions(subscriptions.get(user.getId()));
-
-			String key = user.getEmail().split("@")[1];
-			Integer count = baseStat.get(key);
-			if (count == null) {
-				count = 0;
-			}
-			baseStat.put(key, count + 1);
-		}
+    	Map<String, Integer> baseStat =
+        	getUsersFromFile().stream()
+            	.collect(Collectors.toMap(User::getEmailDomain, u -> 1, Integer::sum));
 
 		printEntrySubscriptions(baseStat);
 	}
@@ -61,6 +32,24 @@ public class UserStat {
 		for (Entry<String, Integer> entry : subscriptionAmounts.entrySet()) {
 			System.out.println(entry.getKey() + "\t" + entry.getValue());
 		}
+	}
+
+	private static List<User> getUsersFromFile() {
+		String[] userData = getFile("WebContent/data/users.txt").split("\n");
+		return Arrays.stream(userData)
+				.skip(HEADER_ROWS)
+				.limit(isTest ? NUMBER_OF_USERS_IN_TEST : userData.length - 1)
+				.map(userFields -> new User(userFields.split(",")))
+				.collect(Collectors.toList());
+	}
+
+	private static Map<Integer, List<Subscription>> getUserSubscriptionsFromFile() {
+		String[] subscriptionData = getFile("WebContent/data/newslettersubs.txt").split("\n");
+		List<String> subscriptionRows = new ArrayList<>(Arrays.asList(subscriptionData));
+		subscriptionRows.remove(HEADER_ROW_INDEX);
+		return subscriptionRows.stream()
+				.map(subscriptionRow -> new Subscription(subscriptionRow.split(",")))
+				.collect(Collectors.groupingBy(Subscription::getUserId, Collectors.toList()));
 	}
 
 	private static String getFile(String path) {
