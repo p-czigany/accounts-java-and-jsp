@@ -13,12 +13,12 @@ public class Subscription {
       DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
   public Subscription(
-      String userIdString, String subscribedString, String listIdString, String createDateString) {
+      String[] subscriptionFields) {
     this(
-        Integer.valueOf(userIdString),
-        Boolean.valueOf(subscribedString),
-        Integer.valueOf(listIdString),
-        LocalDateTime.parse(createDateString, DATE_TIME_FORMATTER));
+        Integer.valueOf(subscriptionFields[0]),
+        Boolean.valueOf(subscriptionFields[1]),
+        Integer.valueOf(subscriptionFields[2]),
+        LocalDateTime.parse(subscriptionFields[3], DATE_TIME_FORMATTER));
   }
 
   public Subscription(
