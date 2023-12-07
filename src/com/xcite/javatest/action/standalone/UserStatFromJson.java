@@ -6,13 +6,13 @@ public class UserStatFromJson extends UserStat {
 
   public static void main(String[] args) {
     UserStatFromJson userStatFromJson = new UserStatFromJson();
-    userStatFromJson.stat1();
-    System.out.println("\t-\t-\t-");
-    userStatFromJson.stat2();
+//    userStatFromJson.stat1();
+//    System.out.println("\t-\t-\t-");
+//    userStatFromJson.stat2();
     System.out.println("\t-\t-\t-");
     userStatFromJson.stat3();
     System.out.println("\t-\t-\t-");
-    userStatFromJson.stat4();
+//    userStatFromJson.stat4();
   }
 
   @Override

@@ -21,6 +21,10 @@ public class Subscription {
         LocalDateTime.parse(subscriptionFields[3], DATE_TIME_FORMATTER));
   }
 
+  public Subscription(Integer userId, Boolean subscribed, Integer listId, String createDateString) {
+    this(userId, subscribed, listId, LocalDateTime.parse(createDateString, DATE_TIME_FORMATTER));
+  }
+
   public Subscription(
       Integer userId, Boolean subscribed, Integer listId, LocalDateTime createDate) {
     this.userId = userId;
