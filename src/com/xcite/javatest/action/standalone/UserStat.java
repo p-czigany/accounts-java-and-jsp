@@ -106,7 +106,7 @@ public class UserStat {
 		}
 	}
 
-	public FileReader getFileReader() {
+	protected FileReader getFileReader() {
 		return fileReader;
 	}
 }
